@@ -1,14 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { io } from "socket.io-client";
+import { SOCKET_CONFIG } from "../config";
 
-// const socket = io('http://localhost:4000', {
-//   transports: ['websocket'],
-// }); //ประกาศใช้ localhost สำหรับทดสอบในเครื่องตัวเอง
-
-const socket = io("http://172.20.10.2:4000", {
+const socket = io(SOCKET_CONFIG.SERVER_URL, {
   transports: ["websocket"],
-}); //ประกาศใช้ IP ภายในเครือข่ายเดียวกัน
+});
 
 const Control: React.FC = () => {
   const [team1Name, setTeam1Name] = useState("Team 1");
@@ -204,7 +201,7 @@ const Control: React.FC = () => {
     setCurrentSet(1);
     setTeam1SetsHistory([]);
     setTeam2SetsHistory([]);
-    setMatchWinner(""); 
+    setMatchWinner("");
     setShowMatchFinishedPopup(false);
 
     socket.emit("update-score", {
